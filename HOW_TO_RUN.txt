@@ -1,0 +1,24 @@
+══════════════════════════════════════════════
+   ESSENCE — HOW TO RUN (Windows)
+══════════════════════════════════════════════
+
+STEP 1: Double-click  →  START_BACKEND.bat
+        Wait for: "✅ MongoDB Atlas connected"
+                  "🚀 LifeOS server → http://localhost:5000"
+
+STEP 2: Double-click  →  START_FRONTEND.bat  (new window)
+        Wait for: "http://localhost:3000"
+
+STEP 3: Open browser → http://localhost:3000
+
+══════════════════════════════════════════════
+COMMON ERRORS:
+  "EADDRINUSE port 5000" → Another server is running.
+  Fix: Open backend/.env and change PORT=5001
+       Then open frontend/vite.config.js and change:
+         target: "http://localhost:5001"
+
+  "npm error Missing script: dev" → You ran npm in
+  the wrong folder. Always cd into backend/ or frontend/
+  first, never the parent folder.
+══════════════════════════════════════════════

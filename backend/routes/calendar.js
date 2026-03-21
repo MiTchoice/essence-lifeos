@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const protect = require("../middleware/auth");
+const ctrl = require("../controllers/calendarController");
+router.use(protect);
+router.get("/",           ctrl.getEvents);
+router.post("/",          ctrl.createEvent);
+router.put("/:id",        ctrl.updateEvent);
+router.delete("/:id",     ctrl.deleteEvent);
+router.post("/sync/tasks",ctrl.syncTasks);
+module.exports = router;

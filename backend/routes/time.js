@@ -1,0 +1,12 @@
+const express = require("express");
+const router = express.Router();
+const protect = require("../middleware/auth");
+const ctrl = require("../controllers/timeController");
+router.use(protect);
+router.get("/",             ctrl.getEntries);
+router.post("/",            ctrl.createEntry);
+router.post("/start",       ctrl.startTimer);
+router.post("/stop/:id",    ctrl.stopTimer);
+router.delete("/:id",       ctrl.deleteEntry);
+router.get("/report/daily", ctrl.getDailyReport);
+module.exports = router;

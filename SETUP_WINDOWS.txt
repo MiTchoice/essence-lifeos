@@ -1,0 +1,188 @@
+============================================================
+  LifeOS — Windows Setup Guide (Step by Step)
+  Complete in ~10 minutes. Everything is FREE.
+============================================================
+
+WHAT YOU NEED:
+  ✅ Node.js v18+  (free download)
+  ✅ MongoDB Atlas  (free cloud database)
+  ✅ This project folder
+
+============================================================
+STEP 1: Install Node.js (if not installed)
+============================================================
+
+  1. Go to: https://nodejs.org
+  2. Download the LTS version (e.g. 20.x.x)
+  3. Run the installer, click Next → Next → Finish
+  4. Open a NEW Command Prompt and type:
+        node --version
+     Should show: v18.x.x or higher ✅
+
+============================================================
+STEP 2: Set up MongoDB Atlas (Free Cloud Database)
+============================================================
+
+  1. Go to: https://www.mongodb.com/atlas
+  2. Click "Try Free" → Create account (free, no card needed)
+  3. Choose "Free" plan (M0 Sandbox)
+  4. Pick any cloud provider (AWS, GCP, Azure) → any region
+  5. Click "Create Cluster" (takes ~2 minutes)
+
+  6. Set up database access:
+     - Left sidebar → "Database Access"
+     - Click "Add New Database User"
+     - Username: lifeos
+     - Password: click "Autogenerate Secure Password" → COPY IT
+     - Role: "Read and write to any database"
+     - Click "Add User"
+
+  7. Set up network access:
+     - Left sidebar → "Network Access"
+     - Click "Add IP Address"
+     - Click "Allow Access from Anywhere" (adds 0.0.0.0/0)
+     - Click "Confirm"
+
+  8. Get your connection string:
+     - Left sidebar → "Database" → Click "Connect"
+     - Choose "Drivers"
+     - Driver: Node.js, Version: 5.5 or later
+     - Copy the connection string — looks like:
+       mongodb+srv://lifeos:<password>@cluster0.xxxxx.mongodb.net/
+
+  9. In the string, replace <password> with your actual password
+     Final string looks like:
+       mongodb+srv://lifeos:MyPass123@cluster0.abc12.mongodb.net/lifeos
+
+============================================================
+STEP 3: Configure the Project
+============================================================
+
+  1. Open the file:  backend\.env  (in Notepad or VS Code)
+  2. Replace the MONGODB_URI line with YOUR connection string:
+
+     MONGODB_URI=mongodb+srv://lifeos:MyPass123@cluster0.abc12.mongodb.net/lifeos
+
+  3. Save the file.
+
+============================================================
+STEP 4: Load Sample Data
+============================================================
+
+  Double-click:  seed-data.bat
+
+  You should see:
+    ✅ Connected!
+    ✅ Seeded 10 tasks
+    ✅ Seeded ~40 time entries
+    ✅ Seeded ~30 expenses
+    ✅ Seeded 5 calendar events
+    🎉 Seed complete!
+
+============================================================
+STEP 5: Run the App
+============================================================
+
+  Open TWO Command Prompt windows:
+
+  Window 1 — Double-click: start-backend.bat
+    Wait for: "🚀 LifeOS server running on http://localhost:5000"
+
+  Window 2 — Double-click: start-frontend.bat
+    Wait for: "Local: http://localhost:3000"
+
+  Then open your browser and go to:
+    http://localhost:3000
+
+  🎉 LifeOS is running!
+
+============================================================
+STEP 6: Deploy Online (Put on Resume!)
+============================================================
+
+  OPTION A: Render.com (FULLY FREE — Recommended)
+  ─────────────────────────────────────────────────
+  This deploys BOTH backend and frontend for free.
+
+  Backend on Render:
+  1. Push your project to GitHub (github.com → New repo → upload files)
+  2. Go to: https://render.com → Sign up free
+  3. Click "New" → "Web Service"
+  4. Connect your GitHub repo
+  5. Settings:
+       Name: lifeos-backend
+       Root Directory: backend
+       Build Command: npm install
+       Start Command: node server.js
+  6. Add Environment Variables:
+       MONGODB_URI = (your Atlas connection string)
+       AI_PROVIDER = mock
+  7. Click "Create Web Service"
+  8. Wait ~3 min → you get a URL like: https://lifeos-backend.onrender.com
+
+  Frontend on Render (or Vercel):
+  1. Click "New" → "Static Site"
+  2. Connect same GitHub repo
+  3. Settings:
+       Root Directory: frontend
+       Build Command: npm install && npm run build
+       Publish Directory: frontend/dist
+  4. Add Environment Variable:
+       VITE_API_URL = https://lifeos-backend.onrender.com
+  5. Click "Create Static Site"
+  6. Wait ~3 min → you get a URL like: https://lifeos.onrender.com
+
+  UPDATE frontend/vite.config.js for production:
+  Change the proxy target to your Render backend URL.
+
+  OPTION B: Vercel (Frontend) + Railway (Backend) — Also Free
+  ─────────────────────────────────────────────────────────────
+  Frontend → vercel.com (connect GitHub, set root to /frontend)
+  Backend  → railway.app (connect GitHub, set root to /backend, add env vars)
+
+============================================================
+RESUME BULLET POINTS
+============================================================
+
+  Add these to your resume under Projects:
+
+  LifeOS — Personal Productivity System
+  • Built a full-stack productivity SaaS with React, Node.js, Express, MongoDB
+  • Features: Task management, time tracking, finance tracker, AI assistant,
+    interactive dashboard with Recharts data visualizations
+  • Integrated AI (OpenRouter / HuggingFace) with mock fallback system
+  • Dark/light mode, responsive design, smooth animations (Framer Motion)
+  • Deployed on Render.com with MongoDB Atlas cloud database
+  • Tech: React 18, Vite, Tailwind CSS, Express.js, Mongoose, Zustand
+
+============================================================
+COMMON ERRORS & FIXES
+============================================================
+
+  Error: ECONNREFUSED 27017
+    → You set a local MongoDB URI. Use MongoDB Atlas instead.
+
+  Error: Authentication failed
+    → Wrong password in MONGODB_URI. Check backend\.env
+
+  Error: ENOTFOUND cluster0.xxx
+    → Wrong cluster URL. Copy fresh from Atlas → Connect → Drivers
+
+  Error: IP not whitelisted
+    → In Atlas → Network Access → Add 0.0.0.0/0
+
+  Error: Module not found
+    → Run: cd backend && npm install
+      Then: cd frontend && npm install
+
+  Frontend shows "Network Error"
+    → Backend is not running. Start start-backend.bat first.
+
+  Port already in use
+    → Open Task Manager → End node.exe processes → try again
+
+============================================================
+  Support: All tools used are free and open source.
+  MongoDB Atlas M0 = free forever (512MB storage)
+  Render.com free tier = always free for static + web service
+============================================================

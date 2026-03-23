@@ -1,4 +1,4 @@
-# 🚀 LifeOS — Personal Productivity System
+# 🚀 LifeOS — Personal Productivity System made by us
 
 A full-stack productivity + analytics + AI assistant system.
 **100% free, open-source, no paid APIs required.**
